@@ -359,6 +359,19 @@
     display:inline-flex; align-items:center; gap:6px;
   }
   .whatsapp-btn:hover{opacity:0.9;}
+
+  .m100-plate{background:#ffffff; border-radius:12px; padding:18px 20px; display:inline-block;}
+  .team-top{display:flex; align-items:center; gap:14px;}
+  .avatar{
+    width:60px; height:60px; border-radius:50%; flex-shrink:0; overflow:hidden;
+    display:flex; align-items:center; justify-content:center;
+    color:#fff; font:700 22px "Fraunces",Georgia,serif;
+  }
+  .avatar img{width:100%; height:100%; object-fit:cover; display:block;}
+  .team-name{font:600 16px "Public Sans",sans-serif;}
+  .team-phone{font-family:"IBM Plex Mono",monospace; font-size:12.5px; color:var(--ink-soft); margin-top:2px;}
+  .team-actions{display:flex; flex-direction:column; align-items:center; gap:12px; margin-top:16px;}
+  .team-qr{width:130px; height:130px; border-radius:10px; background:#faf7ef; padding:8px; border:1px solid var(--line);}
   .case-notes{
     font-size:12px; color:var(--ink-soft); background:var(--surface-sunken); border-radius:8px;
     padding:8px 10px; max-height:100px; overflow-y:auto; white-space:pre-wrap; line-height:1.5;
@@ -438,6 +451,7 @@
   <button data-tab="report">Report</button>
   <button data-tab="cases">Cases</button>
   <button data-tab="totals">Totals</button>
+  <button data-tab="team">Team</button>
 </nav>
 
 <div class="wrap">
@@ -691,6 +705,71 @@
         <button class="export-btn" id="exportCasesBtn">Download CSV</button>
       </div>
       <p class="export-note" id="casesExportNote" style="margin-top:8px;">Data here is live — this is just for taking a snapshot into Excel or Google Sheets.</p>
+    </div>
+  </section>
+
+  <section class="panel" id="panel-team">
+    <div class="card" style="text-align:center;">
+      <div class="m100-plate">
+        <img src="assets/m100-logo.png" alt="M100 Mission Hundreds" style="max-width:220px; width:100%; height:auto; display:block; margin:0 auto;">
+      </div>
+      <p class="sub" style="margin-top:12px;">Tap a name to WhatsApp them, or scan their QR code.</p>
+    </div>
+
+    <div class="card team-card">
+      <div class="team-top">
+        <div class="avatar" style="background:var(--fill-gold)">A</div>
+        <div class="team-info">
+          <div class="team-name">Allan</div>
+          <div class="team-phone">+60 17-736 4565</div>
+        </div>
+      </div>
+      <div class="team-actions">
+        <img class="team-qr" src="assets/qr-allan.png" alt="Scan to WhatsApp Allan">
+        <a class="whatsapp-btn" href="https://wa.me/60177364565" target="_blank" rel="noopener noreferrer">Message on WhatsApp</a>
+      </div>
+    </div>
+
+    <div class="card team-card">
+      <div class="team-top">
+        <div class="avatar" style="background:var(--fill-teal)">S</div>
+        <div class="team-info">
+          <div class="team-name">Stephen</div>
+          <div class="team-phone">+60 16-719 7553</div>
+        </div>
+      </div>
+      <div class="team-actions">
+        <img class="team-qr" src="assets/qr-stephen.png" alt="Scan to WhatsApp Stephen">
+        <a class="whatsapp-btn" href="https://wa.me/60167197553" target="_blank" rel="noopener noreferrer">Message on WhatsApp</a>
+      </div>
+    </div>
+
+    <div class="card team-card">
+      <div class="team-top">
+        <div class="avatar" style="background:var(--fill-green)">Q</div>
+        <div class="team-info">
+          <div class="team-name">Qi Yong</div>
+          <div class="team-phone">+60 12-334 9329</div>
+        </div>
+      </div>
+      <div class="team-actions">
+        <img class="team-qr" src="assets/qr-qiyong.png" alt="Scan to WhatsApp Qi Yong">
+        <a class="whatsapp-btn" href="https://wa.me/60123349329" target="_blank" rel="noopener noreferrer">Message on WhatsApp</a>
+      </div>
+    </div>
+
+    <div class="card team-card">
+      <div class="team-top">
+        <div class="avatar" style="background:var(--fill-red)">M</div>
+        <div class="team-info">
+          <div class="team-name">Michael</div>
+          <div class="team-phone">+60 17-464 8113</div>
+        </div>
+      </div>
+      <div class="team-actions">
+        <img class="team-qr" src="assets/qr-michael.png" alt="Scan to WhatsApp Michael">
+        <a class="whatsapp-btn" href="https://wa.me/60174648113" target="_blank" rel="noopener noreferrer">Message on WhatsApp</a>
+      </div>
     </div>
   </section>
 
