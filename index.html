@@ -1,0 +1,1556 @@
+<title>Roadshow Standby</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Roadshow">
+<meta name="theme-color" content="#1b1712">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' fill='%231b1712'/%3E%3Ctext x='90' y='128' font-family='Georgia,serif' font-size='118' font-weight='700' fill='%23c9a24b' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' fill='%231b1712'/%3E%3Ctext x='90' y='128' font-family='Georgia,serif' font-size='118' font-weight='700' fill='%23c9a24b' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#faf7ef;
+    --ink:#1b1712;
+    --ink-soft:#5b5347;
+    --ink-faint:#8a8171;
+    --line:#e4dcc9;
+    --surface:#ffffff;
+    --surface-sunken:#f1ece0;
+    --gold:#a87423;
+    --gold-deep:#8c6620;
+    --gold-ink:#3d2c0d;
+    --venue-b:#4f7269;
+    --good:#3f7d52;
+    --good-bg:#e6f0e6;
+    --warn:#b4552b;
+    --warn-bg:#f7e9df;
+    --danger:#b23b3b;
+    --shadow: 0 1px 2px rgba(27,23,18,0.06), 0 6px 20px -12px rgba(27,23,18,0.18);
+    --fill-neutral:#6b6151;
+    --fill-green:#3f7d52;
+    --fill-gold:#8c6620;
+    --fill-red:#a83c3c;
+    --fill-teal:#3f5f57;
+    --fill-orange:#a8451f;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#151210;
+      --ink:#f2ede1;
+      --ink-soft:#bcb1a0;
+      --ink-faint:#8c8271;
+      --line:#332c22;
+      --surface:#1e1a15;
+      --surface-sunken:#26211a;
+      --gold:#d9ac54;
+      --gold-deep:#f0c169;
+      --gold-ink:#241a08;
+      --venue-b:#7fada2;
+      --good:#7cb98c;
+      --good-bg:#1c2b20;
+      --warn:#e0996a;
+      --warn-bg:#31241b;
+      --danger:#e08585;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 10px 24px -14px rgba(0,0,0,0.6);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#151210;
+    --ink:#f2ede1;
+    --ink-soft:#bcb1a0;
+    --ink-faint:#8c8271;
+    --line:#332c22;
+    --surface:#1e1a15;
+    --surface-sunken:#26211a;
+    --gold:#d9ac54;
+    --gold-deep:#f0c169;
+    --gold-ink:#241a08;
+    --venue-b:#7fada2;
+    --good:#7cb98c;
+    --good-bg:#1c2b20;
+    --warn:#e0996a;
+    --warn-bg:#31241b;
+    --danger:#e08585;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 10px 24px -14px rgba(0,0,0,0.6);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:640px;margin:0 auto;padding:0 16px 64px;}
+
+  .tip{
+    display:flex; gap:10px; align-items:flex-start;
+    background:var(--gold); color:var(--gold-ink);
+    padding:11px 16px; font-size:13px; line-height:1.45;
+  }
+  .tip[hidden]{display:none;}
+  .tip button.install-btn{
+    background:var(--gold-ink); color:var(--gold);
+    border:none; border-radius:6px; padding:5px 10px;
+    font:600 12px "Public Sans",sans-serif; cursor:pointer; flex-shrink:0;
+  }
+  .tip .tip-close{
+    margin-left:auto; background:none; border:none; color:var(--gold-ink);
+    opacity:0.6; font-size:16px; line-height:1; cursor:pointer; padding:0 2px;
+  }
+  .tip .tip-close:hover{opacity:1;}
+  .tip p{margin:0;flex:1;}
+  .tip strong{font-weight:700;}
+
+  header.appbar{
+    padding:22px 16px 14px; max-width:640px; margin:0 auto;
+    display:flex; align-items:baseline; justify-content:space-between; gap:12px;
+    border-bottom:1px solid var(--line);
+  }
+  header.appbar h1{
+    font-family:"Fraunces", Georgia, serif; font-weight:600; font-size:22px;
+    margin:0; letter-spacing:-0.01em; text-wrap:balance;
+  }
+  header.appbar .dateline{
+    font-family:"IBM Plex Mono", monospace; font-size:11.5px; color:var(--ink-faint);
+    text-align:right; line-height:1.4;
+  }
+
+  nav.tabs{
+    display:flex; gap:2px; max-width:640px; margin:0 auto; padding:12px 10px 0;
+    position:sticky; top:0; background:var(--paper); z-index:5;
+    border-bottom:1px solid var(--line); overflow-x:auto;
+  }
+  nav.tabs button{
+    flex:1 1 0; min-width:64px; background:none; border:none; cursor:pointer;
+    font:600 11px "Public Sans",sans-serif; color:var(--ink-soft);
+    padding:9px 2px 11px; border-bottom:2px solid transparent; white-space:nowrap;
+  }
+  nav.tabs button.active{ color:var(--ink); border-bottom-color:var(--gold); }
+
+  main{padding-top:20px;}
+  section.panel{display:none; flex-direction:column; gap:16px;}
+  section.panel.active{display:flex;}
+
+  .venues{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+  .venue-card{
+    background:var(--surface); border:1px solid var(--line); border-radius:10px;
+    padding:12px 13px; box-shadow:var(--shadow);
+  }
+  .venue-card .vname{font:600 13px "Public Sans",sans-serif;}
+  .venue-card .vhours{
+    font-family:"IBM Plex Mono",monospace; font-size:11.5px; color:var(--gold-deep);
+    margin-top:4px; font-weight:600;
+  }
+
+  .card{
+    background:var(--surface); border:1px solid var(--line); border-radius:12px;
+    padding:18px; box-shadow:var(--shadow);
+  }
+  .card h2{
+    font-family:"Fraunces",Georgia,serif; font-weight:600; font-size:17px;
+    margin:0 0 3px; text-wrap:balance;
+  }
+  .card .sub{font-size:12.5px; color:var(--ink-soft); margin:0 0 16px; line-height:1.5;}
+
+  form{display:flex; flex-direction:column; gap:13px;}
+  .field{display:flex; flex-direction:column; gap:5px;}
+  .field label{
+    font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em;
+    color:var(--ink-faint);
+  }
+  .row2{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+  input, select, textarea{
+    font:500 14.5px "Public Sans",sans-serif; color:var(--ink);
+    background:var(--surface-sunken); border:1px solid var(--line);
+    border-radius:8px; padding:10px 11px; width:100%;
+  }
+  input:focus, select:focus, textarea:focus{
+    outline:2px solid var(--gold); outline-offset:1px; border-color:var(--gold);
+  }
+  textarea{resize:vertical; min-height:56px; font-family:"Public Sans",sans-serif;}
+  .cost-preview{
+    display:flex; justify-content:space-between; align-items:baseline;
+    background:var(--surface-sunken); border:1px dashed var(--line);
+    border-radius:8px; padding:10px 12px; font-size:13px; color:var(--ink-soft);
+  }
+  .cost-preview b{
+    font-family:"IBM Plex Mono",monospace; font-size:16px; color:var(--ink); font-weight:600;
+  }
+  button.submit{
+    background:var(--ink); color:var(--paper); border:none; border-radius:8px;
+    padding:12px 16px; font:600 14px "Public Sans",sans-serif; cursor:pointer;
+    margin-top:2px;
+  }
+  button.submit:hover{background:var(--gold-deep);}
+  button.submit:active{transform:translateY(1px);}
+  button.submit:disabled{opacity:0.5; cursor:not-allowed;}
+  button:focus-visible, [tabindex]:focus-visible{
+    outline:2px solid var(--gold); outline-offset:2px;
+  }
+
+  /* calendar */
+  .cal-nav{display:flex; align-items:center; justify-content:space-between; gap:8px;}
+  .cal-nav .cal-title{font-family:"Fraunces",Georgia,serif; font-weight:600; font-size:15px;}
+  .cal-nav .cal-controls{display:flex; gap:6px; align-items:center;}
+  .cal-nav button.nav-arrow{
+    background:none; border:1px solid var(--line); border-radius:8px;
+    width:28px; height:28px; font-size:13px; cursor:pointer; color:var(--ink-soft);
+  }
+  .cal-nav button.today-btn{
+    background:var(--surface-sunken); border:1px solid var(--line); border-radius:8px;
+    padding:6px 10px; font:600 11px "Public Sans",sans-serif; cursor:pointer; color:var(--ink-soft);
+  }
+  .cal-legend{display:flex; gap:14px; font-size:11px; color:var(--ink-soft); margin-top:10px;}
+  .cal-legend span{display:flex; align-items:center; gap:5px;}
+  .cal-legend .dot{width:7px;height:7px;border-radius:50%;}
+  .cal-weekdays{
+    display:grid; grid-template-columns:repeat(7,1fr); text-align:center;
+    font:600 10px "Public Sans",sans-serif; color:var(--ink-faint); letter-spacing:0.03em;
+    margin:14px 0 5px;
+  }
+  .cal-grid{display:grid; grid-template-columns:repeat(7,1fr); gap:4px;}
+  .cal-cell{
+    min-height:48px; border:1px solid var(--line); border-radius:8px; background:var(--surface);
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;
+    cursor:pointer; font:600 11.5px "IBM Plex Mono",monospace; color:var(--ink-soft);
+    padding:3px 2px;
+  }
+  .cal-cell.empty{visibility:hidden; cursor:default; border:none;}
+  .cal-cell.is-today{box-shadow:inset 0 0 0 1.5px var(--ink-faint);}
+  .cal-cell.is-selected{background:var(--gold); border-color:var(--gold); color:var(--gold-ink);}
+  .dot.v-medini{background:var(--gold-deep);}
+  .dot.v-bodaiju{background:var(--venue-b);}
+  .dot.v-open{background:var(--warn);}
+  .cal-cell .badges{display:flex; flex-wrap:wrap; gap:2px; justify-content:center; max-width:100%;}
+  .badge{
+    width:14px; height:14px; border-radius:50%; font:700 8px "Public Sans",sans-serif;
+    display:flex; align-items:center; justify-content:center; color:#fff; line-height:1; flex-shrink:0;
+  }
+  .badge.v-medini{background:var(--fill-gold);}
+  .badge.v-bodaiju{background:var(--fill-teal);}
+  .badge.v-open{background:var(--fill-orange);}
+  .badge.more{background:var(--surface-sunken); color:var(--ink-soft); border-radius:4px; width:auto; padding:0 4px;}
+
+  .detail-head{display:flex; align-items:center; justify-content:space-between; gap:10px;}
+  .detail-head h3{font-family:"Fraunces",Georgia,serif; font-weight:600; font-size:16px; margin:0;}
+  .detail-head button.add-slot{
+    background:var(--ink); color:var(--paper); border:none; border-radius:7px;
+    padding:7px 12px; font:600 12px "Public Sans",sans-serif; cursor:pointer; flex-shrink:0;
+  }
+
+  .venue-block + .venue-block{margin-top:14px;}
+  .venue-block .vlabel{
+    display:flex; align-items:center; gap:6px; font:600 12px "Public Sans",sans-serif;
+    color:var(--gold-deep); margin-bottom:8px;
+  }
+  .venue-block .vlabel .dot{width:6px;height:6px;border-radius:50%;background:var(--gold-deep);}
+  .venue-block.v-bodaiju .vlabel{color:var(--venue-b);}
+  .venue-block.v-bodaiju .vlabel .dot{background:var(--venue-b);}
+
+  .duty-row{
+    display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;
+    padding:10px 11px; border-radius:9px; background:var(--surface-sunken); font-size:13px;
+    border:1px solid transparent;
+  }
+  .duty-row + .duty-row{margin-top:6px;}
+  .duty-row.open{background:var(--warn-bg); border:1px dashed var(--warn);}
+  .duty-row .who{font-weight:600;}
+  .duty-row .open-tag{font:700 9.5px "Public Sans",sans-serif; color:var(--warn); letter-spacing:0.04em; margin-right:6px;}
+  .duty-row .when{font-family:"IBM Plex Mono",monospace; font-size:11.5px; color:var(--ink-soft);}
+  .duty-row .note-txt{width:100%; font-size:11.5px; color:var(--ink-faint);}
+  .duty-row .actions{display:flex; gap:6px;}
+  .duty-row .actions button{
+    background:var(--surface); border:1px solid var(--line); border-radius:6px;
+    padding:5px 9px; font:600 11px "Public Sans",sans-serif; cursor:pointer; color:var(--ink-soft);
+  }
+  .duty-row .actions button.primary{background:var(--ink); color:var(--paper); border-color:var(--ink);}
+  .duty-row .actions button.danger:hover{background:var(--danger); color:#fff; border-color:var(--danger);}
+  .inline-edit{display:flex; gap:6px; align-items:center; flex-wrap:wrap; width:100%;}
+  .inline-edit input[type="time"], .inline-edit select{padding:6px 8px; font-size:12.5px; width:auto;}
+  .empty{
+    color:var(--ink-faint); font-size:12.5px; text-align:center; padding:14px 10px;
+    border:1px dashed var(--line); border-radius:9px;
+  }
+
+  .tiles{display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px;}
+  .tile{
+    background:var(--surface); border:1px solid var(--line); border-radius:10px;
+    padding:13px 10px; box-shadow:var(--shadow); text-align:center;
+  }
+  .tile .tval{
+    font-family:"IBM Plex Mono",monospace; font-size:20px; font-weight:600;
+    font-variant-numeric:tabular-nums; color:var(--ink);
+  }
+  .tile .tlabel{font-size:10.5px; color:var(--ink-soft); margin-top:3px; letter-spacing:0.02em;}
+  .tile.cost .tval{color:var(--gold-deep);}
+
+  .status-tiles{display:grid; grid-template-columns:repeat(auto-fit,minmax(78px,1fr)); gap:8px;}
+  .status-tile{
+    background:var(--surface); border:1px solid var(--line); border-top:3px solid var(--line-status,var(--ink-faint));
+    border-radius:8px; padding:10px 8px; text-align:center; box-shadow:var(--shadow);
+  }
+  .status-tile .sval{font-family:"IBM Plex Mono",monospace; font-size:18px; font-weight:600;}
+  .status-tile .slabel{font-size:9.5px; color:var(--ink-soft); margin-top:2px; letter-spacing:0.02em;}
+
+  table{width:100%; border-collapse:collapse; font-size:13px;}
+  .table-wrap{overflow-x:auto; border:1px solid var(--line); border-radius:10px;}
+  th, td{
+    padding:9px 11px; text-align:left; border-bottom:1px solid var(--line);
+    white-space:nowrap;
+  }
+  th{
+    font-size:10.5px; text-transform:uppercase; letter-spacing:0.04em;
+    color:var(--ink-faint); font-weight:600; background:var(--surface-sunken);
+  }
+  tr:last-child td{border-bottom:none;}
+  td.num, th.num{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums; text-align:right;}
+  tfoot td{font-weight:700; background:var(--surface-sunken); border-top:1px solid var(--line);}
+
+  .export-row{display:flex; align-items:center; gap:10px; flex-wrap:wrap;}
+  .export-btn{
+    background:none; border:1px solid var(--line); border-radius:7px;
+    padding:8px 13px; font:600 11.5px "Public Sans",sans-serif; cursor:pointer; color:var(--ink-soft);
+    text-decoration:none; display:inline-block;
+  }
+  .export-btn:hover{border-color:var(--gold); color:var(--ink);}
+  .export-note{font-size:11px; color:var(--ink-faint);}
+
+  .note{
+    font-size:12px; color:var(--ink-soft); line-height:1.6; background:var(--surface-sunken);
+    border-radius:8px; padding:10px 12px; border:1px solid var(--line);
+  }
+  .note b{color:var(--ink);}
+
+  .case-card{
+    background:var(--surface); border:1px solid var(--line); border-radius:12px;
+    padding:15px; box-shadow:var(--shadow); display:flex; flex-direction:column; gap:9px;
+  }
+  .case-top{display:flex; justify-content:space-between; align-items:flex-start; gap:8px;}
+  .case-name{font:600 14.5px "Public Sans",sans-serif;}
+  select.status-pill{
+    border:none; border-radius:999px; padding:6px 11px; font:700 10.5px "Public Sans",sans-serif;
+    letter-spacing:0.02em; cursor:pointer; color:#fff; appearance:none; -webkit-appearance:none;
+    background-image:none; text-align:center; flex-shrink:0;
+  }
+  .case-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:7px 14px;
+    background:var(--surface-sunken); border-radius:8px; padding:10px 12px;
+  }
+  .case-grid .kv{display:flex; flex-direction:column; gap:1px; min-width:0;}
+  .case-grid .k{font-size:9.5px; text-transform:uppercase; letter-spacing:0.04em; color:var(--ink-faint);}
+  .case-grid .v{font-size:12.5px; color:var(--ink); overflow-wrap:anywhere;}
+  .case-grid .v.num{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums; font-weight:600;}
+  .bank-row{display:flex; align-items:center; gap:8px; font-size:12.5px;}
+  .bank-row select{width:auto; flex:0 0 auto; padding:6px 9px; font-size:12.5px;}
+  label.ccris-toggle{display:flex; align-items:center; gap:7px; font-size:12.5px; cursor:pointer;}
+  label.ccris-toggle input{width:auto; accent-color:var(--gold-deep);}
+  .whatsapp-btn{
+    background:var(--fill-green); color:#fff; border:none; border-radius:8px;
+    padding:8px 13px; font:600 12px "Public Sans",sans-serif; cursor:pointer; text-decoration:none;
+    display:inline-flex; align-items:center; gap:6px;
+  }
+  .whatsapp-btn:hover{opacity:0.9;}
+  .case-notes{
+    font-size:12px; color:var(--ink-soft); background:var(--surface-sunken); border-radius:8px;
+    padding:8px 10px; max-height:100px; overflow-y:auto; white-space:pre-wrap; line-height:1.5;
+  }
+  .note-add{display:flex; gap:6px;}
+  .note-add input{flex:1;}
+  .note-add button{
+    flex-shrink:0; background:var(--surface-sunken); border:1px solid var(--line); border-radius:8px;
+    padding:0 12px; font:600 12px "Public Sans",sans-serif; cursor:pointer; color:var(--ink-soft);
+  }
+  .case-actions{display:flex; align-items:center; justify-content:space-between; gap:8px;}
+  .text-danger-btn{
+    background:none; border:none; color:var(--ink-faint); font:600 11px "Public Sans",sans-serif;
+    cursor:pointer; padding:2px 4px;
+  }
+  .text-danger-btn:hover{color:var(--danger);}
+  .row-del{
+    background:none; border:none; color:var(--ink-faint); cursor:pointer;
+    font-size:13px; padding:2px 6px; border-radius:6px; line-height:1;
+  }
+  .row-del:hover{background:var(--danger); color:#fff;}
+
+  footer{
+    max-width:640px; margin:8px auto 0; padding:16px; text-align:center;
+    font-size:11.5px; color:var(--ink-faint); line-height:1.6;
+  }
+
+  .toast{
+    position:fixed; left:50%; bottom:22px; transform:translateX(-50%) translateY(12px);
+    background:var(--ink); color:var(--paper); padding:11px 18px; border-radius:999px;
+    font:600 13px "Public Sans",sans-serif; box-shadow:0 10px 30px -8px rgba(0,0,0,0.4);
+    opacity:0; pointer-events:none; transition:opacity 0.25s ease, transform 0.25s ease;
+    z-index:20; max-width:90vw; text-align:center;
+  }
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+
+  @media (prefers-reduced-motion: reduce){
+    .toast{transition:none;}
+  }
+
+  .modal-overlay{
+    position:fixed; inset:0; background:rgba(20,17,13,0.5); z-index:30;
+    display:flex; align-items:center; justify-content:center; padding:20px;
+    opacity:0; pointer-events:none; transition:opacity 0.15s ease;
+  }
+  .modal-overlay.show{opacity:1; pointer-events:auto;}
+  .modal-card{
+    background:var(--surface); border-radius:12px; padding:20px; max-width:360px; width:100%;
+    box-shadow:0 20px 50px -10px rgba(0,0,0,0.35); transform:translateY(8px); transition:transform 0.15s ease;
+  }
+  .modal-overlay.show .modal-card{transform:translateY(0);}
+  .modal-card p{margin:0 0 18px; font-size:14px; color:var(--ink); line-height:1.5;}
+  .modal-card .modal-actions{display:flex; justify-content:flex-end; gap:8px;}
+  .modal-card button{
+    font:600 13px "Public Sans",sans-serif; padding:9px 16px; border-radius:8px; cursor:pointer;
+  }
+  .modal-card button.modal-cancel{background:none; border:1px solid var(--line); color:var(--ink-soft);}
+  .modal-card button.modal-ok{background:var(--danger); border:1px solid var(--danger); color:#fff;}
+  .modal-card button.modal-ok.neutral{background:var(--ink); border-color:var(--ink);}
+</style>
+
+<div class="tip" id="installTip" hidden>
+  <p id="installTipText"><strong>Save this to your home screen</strong> — open it like an app, one tap, no browser bar.</p>
+  <button class="install-btn" id="installBtn" hidden>Install</button>
+  <button class="tip-close" id="installTipClose" aria-label="Dismiss">✕</button>
+</div>
+
+<header class="appbar">
+  <h1>Roadshow Standby</h1>
+  <div class="dateline" id="dateline"></div>
+</header>
+
+<nav class="tabs">
+  <button data-tab="timetable" class="active">Time Table</button>
+  <button data-tab="report">Report</button>
+  <button data-tab="cases">Cases</button>
+  <button data-tab="totals">Totals</button>
+</nav>
+
+<div class="wrap">
+<main>
+
+  <section class="panel active" id="panel-timetable">
+    <div class="venues">
+      <div class="venue-card">
+        <div class="vname">Mall of Medini</div>
+        <div class="vhours">10:00 AM – 8:00 PM</div>
+      </div>
+      <div class="venue-card">
+        <div class="vname">BODAIJU Sales Gallery</div>
+        <div class="vhours">10:00 AM – 6:00 PM</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="cal-nav">
+        <div class="cal-controls">
+          <button class="nav-arrow" id="calPrev" aria-label="Previous month">‹</button>
+          <span class="cal-title" id="calTitle"></span>
+          <button class="nav-arrow" id="calNext" aria-label="Next month">›</button>
+        </div>
+        <button class="today-btn" id="calToday">Today</button>
+      </div>
+      <div class="cal-weekdays"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div>
+      <div class="cal-grid" id="calGrid"></div>
+      <div class="cal-legend">
+        <span><i class="dot v-medini"></i> Medini</span>
+        <span><i class="dot v-bodaiju"></i> BODAIJU</span>
+        <span><i class="dot v-open"></i> Needs cover</span>
+      </div>
+      <p class="export-note" style="margin:8px 0 0;">Letters on each day are advisors' initials — e.g. "A" = Allan. "?" means a slot still needs cover.</p>
+    </div>
+
+    <div class="card">
+      <div class="detail-head">
+        <h3 id="detailDate"></h3>
+        <button class="add-slot" id="addSlotBtn">+ Add slot</button>
+      </div>
+      <div id="calendarDetail" style="margin-top:14px;"></div>
+    </div>
+
+    <div class="card" id="claimCard">
+      <h2>Claim a standby slot</h2>
+      <p class="sub">Pick a venue, date and the hours you can actually cover — tap a day on the calendar above or pick one below. Need to leave partway for another appointment? Sign up now, then use “Need cover” on your slot when the time comes.</p>
+      <form id="signupForm">
+        <div class="field">
+          <label for="su-name">Your name</label>
+          <select id="su-name" name="name" required></select>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label for="su-venue">Venue</label>
+            <select id="su-venue" name="venue" required>
+              <option value="medini">Mall of Medini</option>
+              <option value="bodaiju">BODAIJU Sales Gallery</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="su-date">Date</label>
+            <input id="su-date" name="date" type="date" required>
+          </div>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label for="su-start">Start time</label>
+            <input id="su-start" name="start" type="time" required>
+          </div>
+          <div class="field">
+            <label for="su-end">End time</label>
+            <input id="su-end" name="end" type="time" required>
+          </div>
+        </div>
+        <div class="field">
+          <label for="su-notes">Notes (optional)</label>
+          <textarea id="su-notes" name="notes" placeholder="e.g. leaving early for a client signing"></textarea>
+        </div>
+        <button class="submit" type="submit">Confirm my slot</button>
+      </form>
+    </div>
+  </section>
+
+  <section class="panel" id="panel-report">
+    <div class="card">
+      <h2>Log your shift report</h2>
+      <p class="sub">Record leads collected and CCRIS reports pulled from Bank Negara during your standby shift.</p>
+      <form id="reportForm">
+        <div class="field">
+          <label for="rp-name">Your name</label>
+          <select id="rp-name" name="name" required></select>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label for="rp-venue">Venue</label>
+            <select id="rp-venue" name="venue" required>
+              <option value="medini">Mall of Medini</option>
+              <option value="bodaiju">BODAIJU Sales Gallery</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="rp-date">Date</label>
+            <input id="rp-date" name="date" type="date" required>
+          </div>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label for="rp-leads">Leads collected</label>
+            <input id="rp-leads" name="leads" type="number" min="0" step="1" placeholder="0" required>
+          </div>
+          <div class="field">
+            <label for="rp-ccris">CCRIS reports checked</label>
+            <input id="rp-ccris" name="ccris" type="number" min="0" step="1" placeholder="0" required>
+          </div>
+        </div>
+        <div class="cost-preview">
+          <span>CCRIS cost at RM 8 / report</span>
+          <b id="costPreview">RM 0</b>
+        </div>
+        <div class="field">
+          <label for="rp-notes">Notes (optional)</label>
+          <textarea id="rp-notes" name="notes" placeholder="e.g. 2 leads pending doc collection"></textarea>
+        </div>
+        <button class="submit" type="submit">Submit report</button>
+      </form>
+    </div>
+  </section>
+
+  <section class="panel" id="panel-cases">
+    <div class="note">Tracks a deal from “customer said yes” to your admin's follow-up on <b>loan status</b>, <b>signing</b> and clearing the <b>CCRIS cost</b>. It feeds your admin's queue — they still open the official case in your company system.</div>
+
+    <div class="status-tiles" id="statusTiles"></div>
+
+    <div class="card">
+      <h2>Log a successful deal</h2>
+      <form id="caseForm">
+        <div class="field">
+          <label for="cs-customer">Customer name</label>
+          <input id="cs-customer" type="text" placeholder="e.g. Tan Wei Ming" required>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label for="cs-advisor">Advisor</label>
+            <select id="cs-advisor" required></select>
+          </div>
+          <div class="field">
+            <label for="cs-agent">Agent name</label>
+            <input id="cs-agent" type="text" placeholder="e.g. Jeffrey Chin" required>
+          </div>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label for="cs-project">Project</label>
+            <select id="cs-project" required>
+              <option value="">Select project…</option>
+              <option>Elysia Park</option>
+              <option>Grand Medini</option>
+              <option>Macrolink</option>
+              <option>Verte Medini</option>
+              <option>Bodaiju Residence</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="cs-unit">Unit no.</label>
+            <input id="cs-unit" type="text" placeholder="e.g. A-45-07" required>
+          </div>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label for="cs-venue">Venue</label>
+            <select id="cs-venue" required>
+              <option value="medini">Mall of Medini</option>
+              <option value="bodaiju">BODAIJU Sales Gallery</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="cs-bank">Bank (if known)</label>
+            <select id="cs-bank">
+              <option value="">Not yet decided</option>
+              <option>CIMB</option>
+              <option>HSBC</option>
+              <option>BOC</option>
+              <option>PBB</option>
+              <option>RHB</option>
+              <option>ISLAM</option>
+              <option>RAKYAT</option>
+              <option>MUAMALAT</option>
+            </select>
+          </div>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label for="cs-date">Date</label>
+            <input id="cs-date" type="date" required>
+          </div>
+          <div class="field">
+            <label for="cs-price">Price (RM)</label>
+            <input id="cs-price" type="number" min="0" step="1" placeholder="0" required>
+          </div>
+        </div>
+        <div class="field">
+          <label for="cs-notes">Notes (optional)</label>
+          <textarea id="cs-notes" placeholder="e.g. documents pending"></textarea>
+        </div>
+        <button class="submit" type="submit">Create case</button>
+      </form>
+    </div>
+
+    <div id="casesList" style="display:flex; flex-direction:column; gap:10px;"></div>
+  </section>
+
+  <section class="panel" id="panel-totals">
+    <div class="tiles">
+      <div class="tile"><div class="tval" id="totalLeads">0</div><div class="tlabel">TOTAL LEADS</div></div>
+      <div class="tile"><div class="tval" id="totalCcris">0</div><div class="tlabel">CCRIS CHECKED</div></div>
+      <div class="tile cost"><div class="tval" id="totalCost">RM 0</div><div class="tlabel">TOTAL CCRIS COST</div></div>
+    </div>
+
+    <div class="card">
+      <h2>By advisor</h2>
+      <p class="sub">Cumulative leads and CCRIS spend per team member.</p>
+      <div class="table-wrap">
+        <table id="byAdvisorTable">
+          <thead><tr><th>Advisor</th><th class="num">Leads</th><th class="num">CCRIS</th><th class="num">Cost (RM)</th></tr></thead>
+          <tbody></tbody>
+          <tfoot></tfoot>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Recent ledger</h2>
+      <p class="sub">Latest shift reports across both venues.</p>
+      <div class="table-wrap">
+        <table id="ledgerTable">
+          <thead><tr><th>Date</th><th>Advisor</th><th>Venue</th><th class="num">Leads</th><th class="num">CCRIS</th><th class="num">RM</th><th></th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="export-row" style="margin-top:14px;">
+        <button class="export-btn" id="exportReportsBtn">Download CSV copy</button>
+        <a class="export-btn" href="https://docs.google.com/spreadsheets/d/1gt6wNqEIdKIPrpz-ewliltLF0r6GSGnTPeQVqzx7DrY/edit" target="_blank" rel="noopener noreferrer">Open Data Sheet ↗</a>
+      </div>
+      <p class="export-note" id="reportsExportNote" style="margin-top:8px;">The sheet updates live as reports come in — "Download CSV copy" is just for taking a snapshot.</p>
+    </div>
+
+    <div class="card">
+      <h2>Cases export</h2>
+      <p class="sub">Every logged deal, for your admin to reconcile against the company system.</p>
+      <div class="export-row">
+        <button class="export-btn" id="exportCasesBtn">Download CSV copy</button>
+        <a class="export-btn" href="https://docs.google.com/spreadsheets/d/1gt6wNqEIdKIPrpz-ewliltLF0r6GSGnTPeQVqzx7DrY/edit" target="_blank" rel="noopener noreferrer">Open Data Sheet ↗</a>
+      </div>
+      <p class="export-note" id="casesExportNote" style="margin-top:8px;">The sheet updates live as cases come in — "Download CSV copy" is just for taking a snapshot.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  Internal roadshow ops tool — PIT Mortgage.<br>
+  CCRIS reports are purchased from Bank Negara Malaysia at RM 8 per pull.
+</footer>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-card">
+    <p id="modalMessage"></p>
+    <div class="modal-actions">
+      <button class="modal-cancel" id="modalCancel">Cancel</button>
+      <button class="modal-ok" id="modalOk">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const ROSTER = ["Allan", "Stephen", "Qiyong", "Michael"];
+  const VENUES = {
+    medini:  { name: "Mall of Medini",       start: "10:00", end: "20:00" },
+    bodaiju: { name: "BODAIJU Sales Gallery", start: "10:00", end: "18:00" }
+  };
+  const VENUE_ORDER = ["medini", "bodaiju"];
+  const CCRIS_COST = 8;
+  const STATUSES = ["Submitted", "Approved", "Signing", "Disbursed", "Rejected"];
+  // Text-on-surface (theme-adaptive) vs. solid pill fill (fixed, always dark enough for white text)
+  const STATUS_TEXT_COLOR = {
+    Submitted: "var(--ink-soft)",
+    Approved:  "var(--good)",
+    Signing:   "var(--gold-deep)",
+    Disbursed: "var(--good)",
+    Rejected:  "var(--danger)"
+  };
+  const STATUS_FILL_COLOR = {
+    Submitted: "var(--fill-neutral)",
+    Approved:  "var(--fill-green)",
+    Signing:   "var(--fill-gold)",
+    Disbursed: "var(--fill-green)",
+    Rejected:  "var(--fill-red)"
+  };
+
+  // ---------- date / time helpers ----------
+  function todayISO(){
+    const d = new Date();
+    return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0");
+  }
+  function fmtDate(iso){
+    const [y,m,d] = iso.split("-").map(Number);
+    return new Date(y, m-1, d).toLocaleDateString(undefined, { weekday:"short", day:"numeric", month:"short" });
+  }
+  function fmtDateLong(iso){
+    const [y,m,d] = iso.split("-").map(Number);
+    return new Date(y, m-1, d).toLocaleDateString(undefined, { weekday:"long", day:"numeric", month:"long" });
+  }
+  function fmtTime(hhmm){
+    if (!hhmm) return "";
+    const [h,m] = hhmm.split(":").map(Number);
+    const dt = new Date(2000,0,1,h,m);
+    return dt.toLocaleTimeString(undefined, { hour:"numeric", minute:"2-digit", hour12:true }).toUpperCase();
+  }
+  function isoDate(y,m,d){
+    return y + "-" + String(m+1).padStart(2,"0") + "-" + String(d).padStart(2,"0");
+  }
+  function suggestLeaveTime(shift){
+    const now = new Date();
+    const nowHM = String(now.getHours()).padStart(2,"0") + ":" + String(now.getMinutes()).padStart(2,"0");
+    if (nowHM > shift.start && nowHM < shift.end) return nowHM;
+    const [sh,sm] = shift.start.split(":").map(Number);
+    const [eh,em] = shift.end.split(":").map(Number);
+    const midMin = Math.round(((sh*60+sm) + (eh*60+em)) / 2 / 30) * 30;
+    return String(Math.floor(midMin/60)).padStart(2,"0") + ":" + String(midMin%60).padStart(2,"0");
+  }
+
+  document.getElementById("dateline").innerHTML =
+    new Date().toLocaleDateString(undefined,{weekday:"long", day:"numeric", month:"long"}) + "<br>" +
+    new Date().toLocaleDateString(undefined,{year:"numeric"});
+
+  // ---------- roster selects ----------
+  document.querySelectorAll("#su-name, #rp-name, #cs-advisor").forEach(sel=>{
+    sel.innerHTML = ROSTER.map(n=>'<option value="'+n+'">'+n+'</option>').join("");
+  });
+
+  // ---------- remember name ----------
+  const NAME_KEY = "roadshow_standby_name";
+  function getRememberedName(){
+    try { return localStorage.getItem(NAME_KEY) || ROSTER[0]; } catch(e){ return ROSTER[0]; }
+  }
+  function rememberName(n){
+    try { localStorage.setItem(NAME_KEY, n); } catch(e){}
+  }
+  const remembered = getRememberedName();
+  ["su-name","rp-name"].forEach(id=>{
+    const el = document.getElementById(id);
+    if (ROSTER.includes(remembered)) el.value = remembered;
+  });
+
+  // ---------- sign up defaults ----------
+  const su_date = document.getElementById("su-date");
+  const su_venue = document.getElementById("su-venue");
+  const su_start = document.getElementById("su-start");
+  const su_end = document.getElementById("su-end");
+  su_date.min = todayISO();
+  su_date.value = todayISO();
+  function applyVenueDefaults(){
+    const v = VENUES[su_venue.value];
+    su_start.min = v.start; su_start.max = v.end;
+    su_end.min = v.start; su_end.max = v.end;
+    su_start.value = v.start;
+    su_end.value = v.end;
+  }
+  su_venue.addEventListener("change", applyVenueDefaults);
+  applyVenueDefaults();
+  su_date.addEventListener("change", ()=>{
+    if (!su_date.value) return;
+    selectedDate = su_date.value;
+    currentMonth = new Date(selectedDate.split("-")[0], selectedDate.split("-")[1]-1, 1);
+    coverEditId = null; claimEditId = null;
+    renderCalendar();
+  });
+
+  document.getElementById("rp-date").value = todayISO();
+  document.getElementById("cs-date").value = todayISO();
+
+  // ---------- tabs ----------
+  document.querySelectorAll("nav.tabs button").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      document.querySelectorAll("nav.tabs button").forEach(b=>b.classList.remove("active"));
+      document.querySelectorAll("section.panel").forEach(p=>p.classList.remove("active"));
+      btn.classList.add("active");
+      document.getElementById("panel-"+btn.dataset.tab).classList.add("active");
+    });
+  });
+  // ---------- toast ----------
+  let toastTimer;
+  function toast(msg){
+    const el = document.getElementById("toast");
+    el.textContent = msg;
+    el.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(()=> el.classList.remove("show"), 2800);
+  }
+  // Artifacts render inside a sandboxed iframe where window.confirm() is silently
+  // blocked (it returns false with no dialog shown) — so every action gated on the
+  // native confirm() looked like it did nothing. This is a real in-page replacement.
+  function customConfirm(message, okLabel, neutral){
+    const overlay = document.getElementById("modalOverlay");
+    const okBtn = document.getElementById("modalOk");
+    const cancelBtn = document.getElementById("modalCancel");
+    document.getElementById("modalMessage").textContent = message;
+    okBtn.textContent = okLabel || "Confirm";
+    okBtn.classList.toggle("neutral", !!neutral);
+    overlay.classList.add("show");
+    return new Promise(resolve=>{
+      function cleanup(result){
+        overlay.classList.remove("show");
+        okBtn.removeEventListener("click", onOk);
+        cancelBtn.removeEventListener("click", onCancel);
+        overlay.removeEventListener("click", onBackdrop);
+        resolve(result);
+      }
+      function onOk(){ cleanup(true); }
+      function onCancel(){ cleanup(false); }
+      function onBackdrop(e){ if (e.target === overlay) cleanup(false); }
+      okBtn.addEventListener("click", onOk);
+      cancelBtn.addEventListener("click", onCancel);
+      overlay.addEventListener("click", onBackdrop);
+    });
+  }
+
+  function tryNotify(title, body){
+    try{
+      if (!("Notification" in window)) return;
+      if (Notification.permission === "granted"){
+        new Notification(title, { body });
+      } else if (Notification.permission !== "denied"){
+        Notification.requestPermission().then(p=>{
+          if (p === "granted") new Notification(title, { body });
+        }).catch(()=>{});
+      }
+    } catch(e){ /* notifications unavailable in this context — toast already covers it */ }
+  }
+
+  // ---------- add to home screen ----------
+  (function(){
+    const isStandalone = window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+    if (isStandalone) return;
+    try { if (localStorage.getItem("roadshow_tip_dismissed")) return; } catch(e){}
+
+    const tip = document.getElementById("installTip");
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    const installBtn = document.getElementById("installBtn");
+    let deferredPrompt = null;
+
+    window.addEventListener("beforeinstallprompt", (e)=>{
+      e.preventDefault();
+      deferredPrompt = e;
+      installBtn.hidden = false;
+    });
+    installBtn.addEventListener("click", async ()=>{
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      await deferredPrompt.userChoice;
+      deferredPrompt = null;
+      installBtn.hidden = true;
+    });
+
+    if (isIOS){
+      document.getElementById("installTipText").innerHTML =
+        "<strong>Save this to your home screen</strong> — tap the Share icon, then “Add to Home Screen.”";
+    }
+    tip.hidden = false;
+
+    document.getElementById("installTipClose").addEventListener("click", ()=>{
+      tip.hidden = true;
+      try { localStorage.setItem("roadshow_tip_dismissed", "1"); } catch(e){}
+    });
+  })();
+
+  // ---------- cost preview ----------
+  const rpCcris = document.getElementById("rp-ccris");
+  const costPreview = document.getElementById("costPreview");
+  rpCcris.addEventListener("input", ()=>{
+    const n = Math.max(0, parseInt(rpCcris.value || "0", 10) || 0);
+    costPreview.textContent = "RM " + (n * CCRIS_COST).toLocaleString();
+  });
+
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, c=>({ "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;" }[c]));
+  }
+  function toCsv(headers, rows){
+    const esc = v => { const s = String(v==null?"":v); return /[",\n]/.test(s) ? '"' + s.replace(/"/g,'""') + '"' : s; };
+    return [headers.map(esc).join(","), ...rows.map(r=>r.map(esc).join(","))].join("\r\n");
+  }
+
+  // ---------- db (Google Apps Script + Sheet backend) ----------
+  // Deploy Code.gs as a Web App (Execute as: Me, Who has access: Anyone), then
+  // paste the deployment URL below. See DEPLOY.md for the exact steps.
+  const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbyIJdimUJmH-p0notA8bSRpv2UZobYuP9vWuyz1Scl38SrvU1LFEwhXeMyKzY8j8LPQ/exec";
+
+  function makeSheetDb(apiUrl){
+    const listeners = {};   // collection -> [{orderField,dir,limitN,next,err}]
+    const pollTimers = {};
+
+    function apiGet(collection){
+      return fetch(apiUrl + "?action=list&collection=" + encodeURIComponent(collection))
+        .then(r=>r.json())
+        .then(rows=>{ if (rows && rows.error) throw new Error(rows.error); return rows; });
+    }
+    function apiPost(payload){
+      return fetch(apiUrl, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(payload)
+      }).then(r=>r.json()).then(res=>{ if (res && res.error) throw new Error(res.error); return res; });
+    }
+    function deliver(collection){
+      const subs = listeners[collection] || [];
+      if (!subs.length) return;
+      apiGet(collection).then(rows=>{
+        subs.forEach(sub=>{
+          let r = rows.slice();
+          if (sub.orderField) r.sort((a,b)=>{
+            const av=a[sub.orderField]||"", bv=b[sub.orderField]||"";
+            if (av<bv) return sub.dir==="desc"?1:-1;
+            if (av>bv) return sub.dir==="desc"?-1:1;
+            return 0;
+          });
+          if (sub.limitN) r = r.slice(0, sub.limitN);
+          sub.next({ docs: r.map(x=>({ id:x.id, exists:true, data:()=>x })), empty: r.length===0 });
+        });
+      }).catch(e=> subs.forEach(sub=> sub.err && sub.err({ code:"unavailable", message:String(e) })));
+    }
+    function ensurePolling(collection){
+      if (pollTimers[collection]) return;
+      pollTimers[collection] = setInterval(()=> deliver(collection), 6000);
+    }
+    function docRef(collection, id){
+      return {
+        id,
+        update: async (data)=>{ await apiPost({ action:"update", collection, id, data }); deliver(collection); },
+        delete: async ()=>{ await apiPost({ action:"delete", collection, id }); deliver(collection); }
+      };
+    }
+    function collRef(collection){
+      let orderField=null, dir="asc", limitN=null;
+      const api = {
+        add: async (data)=>{
+          const res = await apiPost({ action:"add", collection, data });
+          deliver(collection);
+          return docRef(collection, res.id);
+        },
+        orderBy(f,d){ orderField=f; dir=d||"asc"; return api; },
+        limit(n){ limitN=n; return api; },
+        onSnapshot(next, err){
+          const sub = { orderField, dir, limitN, next, err };
+          (listeners[collection] = listeners[collection] || []).push(sub);
+          ensurePolling(collection);
+          deliver(collection);
+          return ()=>{ listeners[collection] = (listeners[collection]||[]).filter(s=>s!==sub); };
+        }
+      };
+      return api;
+    }
+    return { doc(path){ const p=path.split("/"); return docRef(p[0], p[1]); }, collection(path){ return collRef(path); } };
+  }
+
+  // Plain browser download — no sandbox restriction outside the Claude Artifact runtime.
+  const downloadsApi = {
+    save: async ({ filename, data })=>{
+      const blob = new Blob([data], { type: "text/csv;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url; a.download = filename;
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(()=> URL.revokeObjectURL(url), 2000);
+      return { status: "saved" };
+    }
+  };
+
+  let db = null, dbReady = false;
+  let shiftsCache = [], reportsCache = [], casesCache = [];
+  let currentMonth = new Date(); currentMonth.setDate(1);
+  let selectedDate = todayISO();
+  let coverEditId = null, claimEditId = null;
+
+  if (SHEET_API_URL.indexOf("PASTE_YOUR") === 0){
+    document.getElementById("calendarDetail").innerHTML =
+      '<div class="empty">This copy isn\'t connected to a data sheet yet — see DEPLOY.md.</div>';
+  } else {
+    db = makeSheetDb(SHEET_API_URL);
+    dbReady = true;
+    subscribeShifts();
+    subscribeReports();
+    subscribeCases();
+  }
+
+  function guardDb(){
+    if (dbReady) return true;
+    toast("Not connected yet — try again in a moment.");
+    return false;
+  }
+
+  // ---------- sign up ----------
+  function findOverlaps(venue, date, start, end){
+    return shiftsCache.filter(s=>
+      s.venue === venue && s.date === date && s.status === "confirmed" &&
+      s.start < end && start < s.end
+    );
+  }
+
+  document.getElementById("signupForm").addEventListener("submit", async (e)=>{
+    e.preventDefault();
+    if (!guardDb()) return;
+    const name = document.getElementById("su-name").value;
+    const venue = su_venue.value;
+    const date = su_date.value;
+    const start = su_start.value;
+    const end = su_end.value;
+    const notes = document.getElementById("su-notes").value.trim();
+    if (!start || !end || start >= end){ toast("End time must be after start time."); return; }
+
+    const overlaps = findOverlaps(venue, date, start, end);
+    if (overlaps.length){
+      const list = overlaps.map(s=> s.name + " (" + fmtTime(s.start) + "–" + fmtTime(s.end) + ")").join(", ");
+      const ok = await customConfirm(
+        "This slot overlaps with " + list + " at " + VENUES[venue].name + " on " + fmtDate(date) +
+        ". Add it anyway?", "Add anyway", true
+      );
+      if (!ok) return;
+    }
+
+    const btn = e.target.querySelector("button.submit");
+    btn.disabled = true;
+    try {
+      await db.collection("shifts").add({
+        name, venue, date, start, end, notes, status: "confirmed", requestedBy: null,
+        createdAt: new Date().toISOString()
+      });
+      rememberName(name);
+      document.getElementById("su-notes").value = "";
+      toast("Slot confirmed — " + VENUES[venue].name + ", " + fmtDate(date));
+      tryNotify("Roadshow Standby", name + " confirmed at " + VENUES[venue].name + " on " + fmtDate(date) + ".");
+      selectedDate = date;
+      currentMonth = new Date(date.split("-")[0], date.split("-")[1]-1, 1);
+      renderCalendar();
+    } catch(err){
+      toast("Couldn't save — try again.");
+    } finally {
+      btn.disabled = false;
+    }
+  });
+
+  document.getElementById("addSlotBtn").addEventListener("click", ()=>{
+    su_date.value = selectedDate < todayISO() ? todayISO() : selectedDate;
+    document.getElementById("claimCard").scrollIntoView({ behavior: "smooth", block: "start" });
+    document.getElementById("su-name").focus();
+  });
+
+  function subscribeShifts(){
+    db.collection("shifts").orderBy("date", "asc").limit(500)
+      .onSnapshot(snap=>{
+        shiftsCache = snap.docs.map(d=> ({ id:d.id, ...d.data() }));
+        renderCalendar();
+      }, ()=> toast("Schedule feed dropped — reload to reconnect."));
+  }
+
+  // ---------- calendar ----------
+  document.getElementById("calPrev").addEventListener("click", ()=>{
+    currentMonth.setMonth(currentMonth.getMonth()-1); renderCalendar();
+  });
+  document.getElementById("calNext").addEventListener("click", ()=>{
+    currentMonth.setMonth(currentMonth.getMonth()+1); renderCalendar();
+  });
+  document.getElementById("calToday").addEventListener("click", ()=>{
+    currentMonth = new Date(); currentMonth.setDate(1);
+    selectedDate = todayISO();
+    su_date.value = selectedDate;
+    coverEditId = null; claimEditId = null;
+    renderCalendar();
+  });
+
+  function renderCalendar(){
+    renderCalGrid();
+    renderCalendarDetail();
+  }
+
+  function renderCalGrid(){
+    const y = currentMonth.getFullYear(), m = currentMonth.getMonth();
+    document.getElementById("calTitle").textContent =
+      currentMonth.toLocaleDateString(undefined, { month:"long", year:"numeric" });
+
+    const firstDay = new Date(y,m,1).getDay();
+    const daysInMonth = new Date(y,m+1,0).getDate();
+    const today = todayISO();
+
+    let html = "";
+    for (let i=0;i<firstDay;i++) html += '<div class="cal-cell empty"></div>';
+    for (let d=1; d<=daysInMonth; d++){
+      const iso = isoDate(y,m,d);
+      const dayShifts = shiftsCache.filter(s=>s.date===iso)
+        .sort((a,b)=> (a.start||"").localeCompare(b.start||""));
+      const badgeData = dayShifts.map(s=>{
+        if (s.status === "open") return { letter:"?", cls:"v-open" };
+        return { letter:(s.name||"?").charAt(0).toUpperCase(), cls:"v-"+s.venue };
+      });
+      const shownBadges = badgeData.slice(0,3).map(b=> '<span class="badge '+b.cls+'">'+b.letter+'</span>').join("");
+      const overflowBadge = badgeData.length > 3 ? '<span class="badge more">+'+(badgeData.length-3)+'</span>' : "";
+      const classes = ["cal-cell"];
+      if (iso === today) classes.push("is-today");
+      if (iso === selectedDate) classes.push("is-selected");
+      html += '<button type="button" class="'+classes.join(" ")+'" data-date="'+iso+'">'+d+
+        '<span class="badges">'+shownBadges+overflowBadge+'</span></button>';
+    }
+    document.getElementById("calGrid").innerHTML = html;
+    document.querySelectorAll(".cal-cell[data-date]").forEach(cell=>{
+      cell.addEventListener("click", ()=>{
+        selectedDate = cell.dataset.date;
+        su_date.value = selectedDate;
+        coverEditId = null; claimEditId = null;
+        renderCalendar();
+      });
+    });
+  }
+
+  function venueBlockHtml(venueKey){
+    const v = VENUES[venueKey];
+    const rows = shiftsCache.filter(s=> s.date===selectedDate && s.venue===venueKey)
+      .sort((a,b)=> (a.start||"").localeCompare(b.start||""));
+    const confirmed = rows.filter(s=>s.status==="confirmed");
+    const open = rows.filter(s=>s.status==="open");
+    const isFuture = selectedDate >= todayISO();
+
+    let inner = "";
+    confirmed.forEach(s=>{
+      if (coverEditId === s.id){
+        inner += '<div class="duty-row"><div class="inline-edit">' +
+          '<span class="who">'+escapeHtml(s.name)+'</span>' +
+          '<span>leaving at</span>' +
+          '<input type="time" id="leave-'+s.id+'" min="'+s.start+'" max="'+s.end+'" value="'+suggestLeaveTime(s)+'">' +
+          '<button class="primary" data-confirm-cover="'+s.id+'">Post request</button>' +
+          '<button data-cancel-edit="1">Cancel</button>' +
+          '<div class="note-txt" style="width:100%;">The time after this becomes OPEN for a teammate to claim.</div>' +
+          '</div></div>';
+      } else {
+        inner += '<div class="duty-row">' +
+          '<div><span class="who">'+escapeHtml(s.name)+'</span> <span class="when">'+fmtTime(s.start)+'–'+fmtTime(s.end)+'</span></div>' +
+          (isFuture ? '<div class="actions"><button data-need-cover="'+s.id+'">Need cover</button><button class="danger" data-release="'+s.id+'">Release</button></div>' : "") +
+          (s.notes ? '<div class="note-txt">'+escapeHtml(s.notes)+'</div>' : "") +
+          '</div>';
+      }
+    });
+    open.forEach(o=>{
+      if (claimEditId === o.id){
+        inner += '<div class="duty-row open"><div class="inline-edit">' +
+          '<span class="open-tag">OPEN</span><span class="when">'+fmtTime(o.start)+'–'+fmtTime(o.end)+'</span>' +
+          '<select id="claim-'+o.id+'">'+ROSTER.map(n=>'<option value="'+n+'">'+n+'</option>').join("")+'</select>' +
+          '<button class="primary" data-confirm-claim="'+o.id+'">Confirm</button>' +
+          '<button data-cancel-edit="1">Cancel</button>' +
+          '</div></div>';
+      } else {
+        inner += '<div class="duty-row open">' +
+          '<div><span class="open-tag">OPEN</span><span class="when">'+fmtTime(o.start)+'–'+fmtTime(o.end)+'</span>' +
+          (o.requestedBy ? ' <span class="note-txt">— '+escapeHtml(o.requestedBy)+' needs coverage</span>' : "") + '</div>' +
+          (isFuture ? '<div class="actions"><button class="primary" data-claim="'+o.id+'">I\'ll cover this</button><button class="danger" data-release="'+o.id+'">Cancel</button></div>' : "") +
+          '</div>';
+      }
+    });
+    if (!confirmed.length && !open.length){
+      inner = '<div class="empty">No one on duty yet.</div>';
+    }
+
+    return '<div class="venue-block v-'+venueKey+'"><div class="vlabel"><span class="dot"></span>'+v.name+
+      ' <span style="color:var(--ink-faint);font-weight:500;">('+fmtTime(v.start)+'–'+fmtTime(v.end)+')</span></div>' + inner + '</div>';
+  }
+
+  function renderCalendarDetail(){
+    document.getElementById("detailDate").textContent = fmtDateLong(selectedDate);
+    const el = document.getElementById("calendarDetail");
+    el.innerHTML = VENUE_ORDER.map(venueBlockHtml).join("");
+
+    el.querySelectorAll("[data-need-cover]").forEach(b=> b.addEventListener("click", ()=>{
+      coverEditId = b.dataset.needCover; claimEditId = null; renderCalendarDetail();
+    }));
+    el.querySelectorAll("[data-claim]").forEach(b=> b.addEventListener("click", ()=>{
+      claimEditId = b.dataset.claim; coverEditId = null; renderCalendarDetail();
+    }));
+    el.querySelectorAll("[data-cancel-edit]").forEach(b=> b.addEventListener("click", ()=>{
+      coverEditId = null; claimEditId = null; renderCalendarDetail();
+    }));
+    el.querySelectorAll("[data-release]").forEach(b=> b.addEventListener("click", async ()=>{
+      if (!guardDb()) return;
+      const ok = await customConfirm("Remove this slot from the schedule? This can't be undone.", "Remove");
+      if (!ok) return;
+      try { await db.doc("shifts/"+b.dataset.release).delete(); toast("Slot removed."); }
+      catch(e){ toast("Couldn't remove — try again."); }
+    }));
+    el.querySelectorAll("[data-confirm-cover]").forEach(b=> b.addEventListener("click", async ()=>{
+      if (!guardDb()) return;
+      const id = b.dataset.confirmCover;
+      const shift = shiftsCache.find(s=>s.id===id);
+      const leaveInput = document.getElementById("leave-"+id);
+      const leaveAt = leaveInput.value;
+      if (!shift || !leaveAt || leaveAt <= shift.start){ toast("Pick a time after your start time."); return; }
+      if (leaveAt >= shift.end){ toast("That's already your end time — nothing to hand off."); return; }
+      const ok = await customConfirm(
+        shift.name + " leaves at " + fmtTime(leaveAt) + ". " + VENUES[shift.venue].name + " will show as OPEN from " +
+        fmtTime(leaveAt) + " to " + fmtTime(shift.end) + " until a teammate claims it. Post this request?",
+        "Post request", true
+      );
+      if (!ok) return;
+      try {
+        await db.doc("shifts/"+id).update({ end: leaveAt });
+        await db.collection("shifts").add({
+          name: null, venue: shift.venue, date: shift.date, start: leaveAt, end: shift.end,
+          notes: "", status: "open", requestedBy: shift.name, createdAt: new Date().toISOString()
+        });
+        coverEditId = null;
+        renderCalendarDetail();
+        toast("Coverage requested for " + fmtTime(leaveAt) + "–" + fmtTime(shift.end));
+        tryNotify("Roadshow Standby", VENUES[shift.venue].name + " needs cover " + fmtTime(leaveAt) + "–" + fmtTime(shift.end) + ".");
+      } catch(e){ toast("Couldn't update — try again."); }
+    }));
+    el.querySelectorAll("[data-confirm-claim]").forEach(b=> b.addEventListener("click", async ()=>{
+      if (!guardDb()) return;
+      const id = b.dataset.confirmClaim;
+      const name = document.getElementById("claim-"+id).value;
+      const open = shiftsCache.find(s=>s.id===id);
+      const ok = open && await customConfirm(
+        "Cover " + VENUES[open.venue].name + ", " + fmtTime(open.start) + "–" + fmtTime(open.end) + ", as " + name + "?",
+        "Yes, I'll cover it", true
+      );
+      if (!ok) return;
+      try {
+        await db.doc("shifts/"+id).update({ name, status: "confirmed" });
+        rememberName(name);
+        claimEditId = null;
+        renderCalendarDetail();
+        toast(name + " is now covering that slot.");
+      } catch(e){ toast("Couldn't update — try again."); }
+    }));
+  }
+
+  // ---------- shift report ----------
+  document.getElementById("reportForm").addEventListener("submit", async (e)=>{
+    e.preventDefault();
+    if (!guardDb()) return;
+    const name = document.getElementById("rp-name").value;
+    const venue = document.getElementById("rp-venue").value;
+    const date = document.getElementById("rp-date").value;
+    const leads = Math.max(0, parseInt(document.getElementById("rp-leads").value || "0", 10) || 0);
+    const ccris = Math.max(0, parseInt(document.getElementById("rp-ccris").value || "0", 10) || 0);
+    const notes = document.getElementById("rp-notes").value.trim();
+    if (!date) return;
+
+    const btn = e.target.querySelector("button.submit");
+    btn.disabled = true;
+    try {
+      await db.collection("reports").add({
+        name, venue, date, leads, ccris, cost: ccris * CCRIS_COST, notes,
+        createdAt: new Date().toISOString()
+      });
+      rememberName(name);
+      document.getElementById("rp-leads").value = "";
+      document.getElementById("rp-ccris").value = "";
+      document.getElementById("rp-notes").value = "";
+      costPreview.textContent = "RM 0";
+      toast("Report logged — " + leads + " leads, " + ccris + " CCRIS");
+      tryNotify("Roadshow Standby", name + " logged " + leads + " leads and " + ccris + " CCRIS reports (RM " + (ccris*CCRIS_COST) + ").");
+    } catch(err){
+      toast("Couldn't save — try again.");
+    } finally {
+      btn.disabled = false;
+    }
+  });
+
+  function subscribeReports(){
+    db.collection("reports").orderBy("date", "desc").limit(500)
+      .onSnapshot(snap=>{
+        reportsCache = snap.docs.map(d=> ({ id:d.id, ...d.data() }));
+        renderTotals();
+      }, ()=> toast("Reports feed dropped — reload to reconnect."));
+  }
+
+  function renderTotals(){
+    const rows = reportsCache;
+    const totalLeads = rows.reduce((s,r)=> s + (r.leads||0), 0);
+    const totalCcris = rows.reduce((s,r)=> s + (r.ccris||0), 0);
+    const totalCost = rows.reduce((s,r)=> s + (r.cost || (r.ccris||0)*CCRIS_COST), 0);
+    document.getElementById("totalLeads").textContent = totalLeads.toLocaleString();
+    document.getElementById("totalCcris").textContent = totalCcris.toLocaleString();
+    document.getElementById("totalCost").textContent = "RM " + totalCost.toLocaleString();
+
+    const byAdvisor = {};
+    rows.forEach(r=>{
+      const key = r.name || "Unknown";
+      if (!byAdvisor[key]) byAdvisor[key] = { leads:0, ccris:0, cost:0 };
+      byAdvisor[key].leads += r.leads||0;
+      byAdvisor[key].ccris += r.ccris||0;
+      byAdvisor[key].cost += r.cost || (r.ccris||0)*CCRIS_COST;
+    });
+    const advisorNames = Object.keys(byAdvisor).sort((a,b)=> byAdvisor[b].cost - byAdvisor[a].cost);
+    const tbody = document.querySelector("#byAdvisorTable tbody");
+    const tfoot = document.querySelector("#byAdvisorTable tfoot");
+    if (advisorNames.length === 0){
+      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--ink-faint);">No reports logged yet.</td></tr>';
+      tfoot.innerHTML = "";
+    } else {
+      tbody.innerHTML = advisorNames.map(n=>{
+        const a = byAdvisor[n];
+        return "<tr><td>" + escapeHtml(n) + "</td><td class=\"num\">" + a.leads + "</td><td class=\"num\">" + a.ccris + "</td><td class=\"num\">" + a.cost.toLocaleString() + "</td></tr>";
+      }).join("");
+      tfoot.innerHTML = "<tr><td>Total</td><td class=\"num\">" + totalLeads + "</td><td class=\"num\">" + totalCcris + "</td><td class=\"num\">" + totalCost.toLocaleString() + "</td></tr>";
+    }
+
+    const ledgerBody = document.querySelector("#ledgerTable tbody");
+    if (rows.length === 0){
+      ledgerBody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--ink-faint);">No reports logged yet.</td></tr>';
+    } else {
+      ledgerBody.innerHTML = rows.slice(0,25).map(r=>
+        "<tr><td>" + fmtDate(r.date) + "</td><td>" + escapeHtml(r.name||"") + "</td><td>" +
+        (VENUES[r.venue] ? VENUES[r.venue].name : r.venue) + "</td><td class=\"num\">" + (r.leads||0) +
+        "</td><td class=\"num\">" + (r.ccris||0) + "</td><td class=\"num\">" + (r.cost || (r.ccris||0)*CCRIS_COST).toLocaleString() +
+        "</td><td><button class=\"row-del\" data-report-del=\"" + r.id + "\" aria-label=\"Delete report\">✕</button></td></tr>"
+      ).join("");
+      ledgerBody.querySelectorAll("[data-report-del]").forEach(btn=>{
+        btn.addEventListener("click", async ()=>{
+          if (!guardDb()) return;
+          const ok = await customConfirm("Delete this report? This can't be undone.", "Delete");
+          if (!ok) return;
+          try { await db.doc("reports/"+btn.dataset.reportDel).delete(); toast("Report deleted."); }
+          catch(e){ toast("Couldn't delete — try again."); }
+        });
+      });
+    }
+  }
+
+  document.getElementById("exportReportsBtn").addEventListener("click", async ()=>{
+    if (!downloadsApi){ toast("Export isn't available in this view."); return; }
+    const rows = reportsCache.map(r=> [r.date, r.name, VENUES[r.venue]?VENUES[r.venue].name:r.venue, r.leads||0, r.ccris||0, r.cost||(r.ccris||0)*CCRIS_COST, r.notes||""]);
+    const csv = toCsv(["Date","Advisor","Venue","Leads","CCRIS","Cost (RM)","Notes"], rows);
+    try { await downloadsApi.save({ filename: "roadshow-reports-" + todayISO() + ".csv", data: csv }); toast("Saved."); }
+    catch(err){ if (err && err.code === "declined") return; toast("Couldn't export — try again."); }
+  });
+
+  // ---------- cases ----------
+  const BANKS = ["CIMB","HSBC","BOC","PBB","RHB","ISLAM","RAKYAT","MUAMALAT"];
+
+  function caseWhatsAppText(c){
+    const lines = [
+      "*New Case — " + c.customer + "*",
+      "Project: " + (c.project || "-"),
+      "Unit: " + (c.unit || "-"),
+      "Agent: " + (c.agent || "-"),
+      "Price: RM " + (caseNum(c).toLocaleString()),
+      "Bank: " + (c.bank || "Not yet decided"),
+      "Advisor: " + (c.advisor || "-"),
+      "Venue: " + (VENUES[c.venue] ? VENUES[c.venue].name : (c.venue || "-")),
+      "Date: " + fmtDate(c.date),
+      "Status: " + c.status
+    ];
+    return lines.join("\n");
+  }
+  function caseNum(c){ return c.price != null ? c.price : (c.amount || 0); }
+
+  document.getElementById("caseForm").addEventListener("submit", async (e)=>{
+    e.preventDefault();
+    if (!guardDb()) return;
+    const customer = document.getElementById("cs-customer").value.trim();
+    const advisor = document.getElementById("cs-advisor").value;
+    const agent = document.getElementById("cs-agent").value.trim();
+    const project = document.getElementById("cs-project").value;
+    const unit = document.getElementById("cs-unit").value.trim();
+    const venue = document.getElementById("cs-venue").value;
+    const bank = document.getElementById("cs-bank").value;
+    const date = document.getElementById("cs-date").value;
+    const price = Math.max(0, parseFloat(document.getElementById("cs-price").value || "0") || 0);
+    const notes = document.getElementById("cs-notes").value.trim();
+    if (!customer || !date || !project || !unit || !agent) return;
+
+    const btn = e.target.querySelector("button.submit");
+    btn.disabled = true;
+    const nowIso = new Date().toISOString();
+    try {
+      await db.collection("cases").add({
+        customer, advisor, agent, project, unit, venue, bank, date, price, notes,
+        status: "Submitted", ccrisCleared: false,
+        createdAt: nowIso, updatedAt: nowIso
+      });
+      document.getElementById("cs-customer").value = "";
+      document.getElementById("cs-agent").value = "";
+      document.getElementById("cs-unit").value = "";
+      document.getElementById("cs-price").value = "";
+      document.getElementById("cs-notes").value = "";
+      toast("Case created for " + customer + " — tap Share to WhatsApp below to send it on.");
+      tryNotify("Roadshow Standby", "New case: " + customer + " (RM " + price.toLocaleString() + ") logged by " + advisor + ".");
+    } catch(err){
+      toast("Couldn't save — try again.");
+    } finally {
+      btn.disabled = false;
+    }
+  });
+
+  function subscribeCases(){
+    db.collection("cases").orderBy("date", "desc").limit(500)
+      .onSnapshot(snap=>{
+        casesCache = snap.docs.map(d=> ({ id:d.id, ...d.data() }))
+          .sort((a,b)=> (b.updatedAt||b.createdAt||"").localeCompare(a.updatedAt||a.createdAt||""));
+        renderCases();
+      }, ()=> toast("Cases feed dropped — reload to reconnect."));
+  }
+
+  function renderCases(){
+    const tiles = document.getElementById("statusTiles");
+    tiles.innerHTML = STATUSES.map(s=>{
+      const count = casesCache.filter(c=>c.status===s).length;
+      return '<div class="status-tile" style="--line-status:'+STATUS_TEXT_COLOR[s]+'"><div class="sval" style="color:'+STATUS_TEXT_COLOR[s]+'">'+count+'</div><div class="slabel">'+s.toUpperCase()+'</div></div>';
+    }).join("");
+
+    const list = document.getElementById("casesList");
+    if (!casesCache.length){
+      list.innerHTML = '<div class="empty">No cases logged yet.</div>';
+      return;
+    }
+    list.innerHTML = casesCache.map(c=>{
+      const statusOpts = STATUSES.map(s=> '<option value="'+s+'"'+(s===c.status?' selected':'')+'>'+s+'</option>').join("");
+      const bankOpts = '<option value="">Not yet decided</option>' +
+        BANKS.map(b=> '<option value="'+b+'"'+(b===c.bank?' selected':'')+'>'+b+'</option>').join("");
+      const kv = (k,v,num)=> '<div class="kv"><span class="k">'+k+'</span><span class="v'+(num?' num':'')+'">'+v+'</span></div>';
+      return '<div class="case-card">' +
+        '<div class="case-top"><span class="case-name">'+escapeHtml(c.customer)+'</span>' +
+        '<select class="status-pill" data-status-for="'+c.id+'" style="background:'+STATUS_FILL_COLOR[c.status]+'">'+statusOpts+'</select></div>' +
+        '<div class="case-grid">' +
+          kv("Project", escapeHtml(c.project||"—")) +
+          kv("Unit no.", escapeHtml(c.unit||"—")) +
+          kv("Agent", escapeHtml(c.agent||"—")) +
+          kv("Advisor", escapeHtml(c.advisor||"—")) +
+          kv("Venue", VENUES[c.venue]?VENUES[c.venue].name:(c.venue||"—")) +
+          kv("Date", fmtDate(c.date)) +
+          kv("Price (RM)", caseNum(c).toLocaleString(), true) +
+        '</div>' +
+        '<div class="bank-row"><span>Bank</span><select data-bank-for="'+c.id+'">'+bankOpts+'</select></div>' +
+        '<label class="ccris-toggle"><input type="checkbox" data-ccris-for="'+c.id+'" '+(c.ccrisCleared?'checked':'')+'> CCRIS report cost cleared</label>' +
+        (c.notes ? '<div class="case-notes">'+escapeHtml(c.notes)+'</div>' : "") +
+        '<div class="note-add"><input type="text" placeholder="Add a follow-up note…" data-note-input="'+c.id+'"><button data-note-add="'+c.id+'">Add</button></div>' +
+        '<div class="case-actions">' +
+          '<a class="whatsapp-btn" data-wa-for="'+c.id+'" href="#" target="_blank" rel="noopener noreferrer">Share to WhatsApp</a>' +
+          '<button class="text-danger-btn" data-case-del="'+c.id+'">Delete case</button>' +
+        '</div>' +
+        '</div>';
+    }).join("");
+
+    list.querySelectorAll("[data-wa-for]").forEach(a=>{
+      const c = casesCache.find(x=>x.id===a.dataset.waFor);
+      if (c) a.href = "https://wa.me/?text=" + encodeURIComponent(caseWhatsAppText(c));
+    });
+    list.querySelectorAll("[data-bank-for]").forEach(sel=>{
+      sel.addEventListener("change", async ()=>{
+        if (!guardDb()) return;
+        const id = sel.dataset.bankFor;
+        try { await db.doc("cases/"+id).update({ bank: sel.value, updatedAt: new Date().toISOString() }); }
+        catch(e){ toast("Couldn't update — try again."); }
+      });
+    });
+
+    list.querySelectorAll("[data-status-for]").forEach(sel=>{
+      sel.addEventListener("change", async ()=>{
+        if (!guardDb()) return;
+        const id = sel.dataset.statusFor;
+        sel.style.background = STATUS_FILL_COLOR[sel.value];
+        try { await db.doc("cases/"+id).update({ status: sel.value, updatedAt: new Date().toISOString() }); }
+        catch(e){ toast("Couldn't update — try again."); }
+      });
+    });
+    list.querySelectorAll("[data-ccris-for]").forEach(cb=>{
+      cb.addEventListener("change", async ()=>{
+        if (!guardDb()) return;
+        const id = cb.dataset.ccrisFor;
+        try { await db.doc("cases/"+id).update({ ccrisCleared: cb.checked, updatedAt: new Date().toISOString() }); }
+        catch(e){ toast("Couldn't update — try again."); }
+      });
+    });
+    list.querySelectorAll("[data-note-add]").forEach(btn=>{
+      btn.addEventListener("click", async ()=>{
+        if (!guardDb()) return;
+        const id = btn.dataset.noteAdd;
+        const input = document.querySelector('[data-note-input="'+id+'"]');
+        const text = input.value.trim();
+        if (!text) return;
+        const c = casesCache.find(x=>x.id===id);
+        const stamp = new Date().toLocaleDateString(undefined,{day:"numeric",month:"short"}) + " " +
+          new Date().toLocaleTimeString(undefined,{hour:"numeric",minute:"2-digit"});
+        const newNotes = (c && c.notes ? c.notes + "\n" : "") + "[" + stamp + "] " + text;
+        try {
+          await db.doc("cases/"+id).update({ notes: newNotes, updatedAt: new Date().toISOString() });
+          input.value = "";
+        } catch(e){ toast("Couldn't save note — try again."); }
+      });
+    });
+    list.querySelectorAll("[data-case-del]").forEach(btn=>{
+      btn.addEventListener("click", async ()=>{
+        if (!guardDb()) return;
+        const ok = await customConfirm("Delete this case? This can't be undone.", "Delete");
+        if (!ok) return;
+        try { await db.doc("cases/"+btn.dataset.caseDel).delete(); toast("Case deleted."); }
+        catch(e){ toast("Couldn't delete — try again."); }
+      });
+    });
+  }
+
+  document.getElementById("exportCasesBtn").addEventListener("click", async ()=>{
+    if (!downloadsApi){ toast("Export isn't available in this view."); return; }
+    const rows = casesCache.map(c=> [c.date, c.customer, c.advisor, c.agent||"", c.project||"", c.unit||"",
+      VENUES[c.venue]?VENUES[c.venue].name:c.venue, c.bank||"", caseNum(c), c.status, c.ccrisCleared?"Yes":"No",
+      (c.notes||"").replace(/\n/g," | ")]);
+    const csv = toCsv(["Date","Customer","Advisor","Agent","Project","Unit No","Venue","Bank","Price (RM)","Status","CCRIS Cleared","Notes"], rows);
+    try { await downloadsApi.save({ filename: "roadshow-cases-" + todayISO() + ".csv", data: csv }); toast("Saved."); }
+    catch(err){ if (err && err.code === "declined") return; toast("Couldn't export — try again."); }
+  });
+
+  renderCalendar();
+</script>
