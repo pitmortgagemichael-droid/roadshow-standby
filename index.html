@@ -672,20 +672,18 @@
         </table>
       </div>
       <div class="export-row" style="margin-top:14px;">
-        <button class="export-btn" id="exportReportsBtn">Download CSV copy</button>
-        <a class="export-btn" href="https://docs.google.com/spreadsheets/d/1gt6wNqEIdKIPrpz-ewliltLF0r6GSGnTPeQVqzx7DrY/edit" target="_blank" rel="noopener noreferrer">Open Data Sheet ↗</a>
+        <button class="export-btn" id="exportReportsBtn">Download CSV</button>
       </div>
-      <p class="export-note" id="reportsExportNote" style="margin-top:8px;">The sheet updates live as reports come in — "Download CSV copy" is just for taking a snapshot.</p>
+      <p class="export-note" id="reportsExportNote" style="margin-top:8px;">Data here is live — this is just for taking a snapshot into Excel or Google Sheets.</p>
     </div>
 
     <div class="card">
       <h2>Cases export</h2>
       <p class="sub">Every logged deal, for your admin to reconcile against the company system.</p>
       <div class="export-row">
-        <button class="export-btn" id="exportCasesBtn">Download CSV copy</button>
-        <a class="export-btn" href="https://docs.google.com/spreadsheets/d/1gt6wNqEIdKIPrpz-ewliltLF0r6GSGnTPeQVqzx7DrY/edit" target="_blank" rel="noopener noreferrer">Open Data Sheet ↗</a>
+        <button class="export-btn" id="exportCasesBtn">Download CSV</button>
       </div>
-      <p class="export-note" id="casesExportNote" style="margin-top:8px;">The sheet updates live as cases come in — "Download CSV copy" is just for taking a snapshot.</p>
+      <p class="export-note" id="casesExportNote" style="margin-top:8px;">Data here is live — this is just for taking a snapshot into Excel or Google Sheets.</p>
     </div>
   </section>
 
@@ -709,6 +707,8 @@
   </div>
 </div>
 
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 <script>
   const ROSTER = ["Allan", "Stephen", "Qiyong", "Michael"];
   const VENUES = {
@@ -927,77 +927,18 @@
     return [headers.map(esc).join(","), ...rows.map(r=>r.map(esc).join(","))].join("\r\n");
   }
 
-  // ---------- db (Google Apps Script + Sheet backend) ----------
-  // Deploy Code.gs as a Web App (Execute as: Me, Who has access: Anyone), then
-  // paste the deployment URL below. See DEPLOY.md for the exact steps.
-  const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbyIJdimUJmH-p0notA8bSRpv2UZobYuP9vWuyz1Scl38SrvU1LFEwhXeMyKzY8j8LPQ/exec";
-
-  function makeSheetDb(apiUrl){
-    const listeners = {};   // collection -> [{orderField,dir,limitN,next,err}]
-    const pollTimers = {};
-
-    function apiGet(collection){
-      return fetch(apiUrl + "?action=list&collection=" + encodeURIComponent(collection))
-        .then(r=>r.json())
-        .then(rows=>{ if (rows && rows.error) throw new Error(rows.error); return rows; });
-    }
-    function apiPost(payload){
-      return fetch(apiUrl, {
-        method: "POST",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify(payload)
-      }).then(r=>r.json()).then(res=>{ if (res && res.error) throw new Error(res.error); return res; });
-    }
-    function deliver(collection){
-      const subs = listeners[collection] || [];
-      if (!subs.length) return;
-      apiGet(collection).then(rows=>{
-        subs.forEach(sub=>{
-          let r = rows.slice();
-          if (sub.orderField) r.sort((a,b)=>{
-            const av=a[sub.orderField]||"", bv=b[sub.orderField]||"";
-            if (av<bv) return sub.dir==="desc"?1:-1;
-            if (av>bv) return sub.dir==="desc"?-1:1;
-            return 0;
-          });
-          if (sub.limitN) r = r.slice(0, sub.limitN);
-          sub.next({ docs: r.map(x=>({ id:x.id, exists:true, data:()=>x })), empty: r.length===0 });
-        });
-      }).catch(e=> subs.forEach(sub=> sub.err && sub.err({ code:"unavailable", message:String(e) })));
-    }
-    function ensurePolling(collection){
-      if (pollTimers[collection]) return;
-      pollTimers[collection] = setInterval(()=> deliver(collection), 6000);
-    }
-    function docRef(collection, id){
-      return {
-        id,
-        update: async (data)=>{ await apiPost({ action:"update", collection, id, data }); deliver(collection); },
-        delete: async ()=>{ await apiPost({ action:"delete", collection, id }); deliver(collection); }
-      };
-    }
-    function collRef(collection){
-      let orderField=null, dir="asc", limitN=null;
-      const api = {
-        add: async (data)=>{
-          const res = await apiPost({ action:"add", collection, data });
-          deliver(collection);
-          return docRef(collection, res.id);
-        },
-        orderBy(f,d){ orderField=f; dir=d||"asc"; return api; },
-        limit(n){ limitN=n; return api; },
-        onSnapshot(next, err){
-          const sub = { orderField, dir, limitN, next, err };
-          (listeners[collection] = listeners[collection] || []).push(sub);
-          ensurePolling(collection);
-          deliver(collection);
-          return ()=>{ listeners[collection] = (listeners[collection]||[]).filter(s=>s!==sub); };
-        }
-      };
-      return api;
-    }
-    return { doc(path){ const p=path.split("/"); return docRef(p[0], p[1]); }, collection(path){ return collRef(path); } };
-  }
+  // ---------- db (Firebase Firestore backend) ----------
+  // Real-time, reliable, and free at this scale. The compat SDK's API is a
+  // direct match for the collection/doc chainable calls already used below.
+  const firebaseConfig = {
+    apiKey: "AIzaSyAxfYAVX1M_7L2zEaaydGY5f44_nksPk5g",
+    authDomain: "roadshow-standby.firebaseapp.com",
+    projectId: "roadshow-standby",
+    storageBucket: "roadshow-standby.firebasestorage.app",
+    messagingSenderId: "320290454807",
+    appId: "1:320290454807:web:4046b996c8a306fd928b52"
+  };
+  firebase.initializeApp(firebaseConfig);
 
   // Plain browser download — no sandbox restriction outside the Claude Artifact runtime.
   const downloadsApi = {
@@ -1018,15 +959,15 @@
   let selectedDate = todayISO();
   let coverEditId = null, claimEditId = null;
 
-  if (SHEET_API_URL.indexOf("PASTE_YOUR") === 0){
-    document.getElementById("calendarDetail").innerHTML =
-      '<div class="empty">This copy isn\'t connected to a data sheet yet — see DEPLOY.md.</div>';
-  } else {
-    db = makeSheetDb(SHEET_API_URL);
+  try {
+    db = firebase.firestore();
     dbReady = true;
     subscribeShifts();
     subscribeReports();
     subscribeCases();
+  } catch (e) {
+    document.getElementById("calendarDetail").innerHTML =
+      '<div class="empty">Live schedule isn\'t available right now — try reloading the page.</div>';
   }
 
   function guardDb(){
